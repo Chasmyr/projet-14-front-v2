@@ -1,9 +1,11 @@
+import './index.css'
+
 const AddressForm = () => {
 
     return (
-        <>
-            <p>Address</p>
-        </>
+        <div>
+            <p className='address-form'>Address</p>
+        </div>
     )
 }
 

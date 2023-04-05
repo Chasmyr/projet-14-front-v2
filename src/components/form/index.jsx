@@ -9,7 +9,9 @@ const Form = ({setIsModalOpen}) => {
             <h2 className='form-title'>Create Employee</h2>
             <PersonnalInfoForm />
             <AddressForm />
-            <button className='form-button'>SAVE</button>
+            <div>
+                <button className='form-button'>SAVE</button>
+            </div>
         </div>
     )
 }
