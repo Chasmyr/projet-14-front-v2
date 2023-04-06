@@ -1,3 +1,26 @@
+export const selectData = [
+    {
+        "name": "Sales",
+        "value": "Sales"
+    },
+    {
+        "name": "Marketing",
+        "value": "Marketing"
+    },
+    {
+        "name": "Engineering",
+        "value": "Engineering"
+    },
+    {
+        "name": "Human Resources",
+        "value": "HR"
+    },
+    {
+        "name": "Legal",
+        "value": "Legal"
+    }
+]
+
 export const states = [
     {
         "name": "Alabama",

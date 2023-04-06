@@ -20,6 +20,7 @@ input[type="date"] {
   .date-picker__input {
     width: calc(100% - 18px);
     padding: 12px 8px 8px;
+    margin-top: 5px;
     border-radius: 4px;
     background-color: #fff;
     border: 1px solid #ccc;
