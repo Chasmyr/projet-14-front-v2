@@ -6,7 +6,7 @@ import {useState} from "react"
 
 const CreateEmployee = ({employees = null, dispatch}) => {
 
-    const [isModalOpen, setIsModalOpen] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     console.log(employees)
 
