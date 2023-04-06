@@ -4,60 +4,115 @@ import './index.css'
 import DatePicker from '../formComponents/datePicker'
 import Select from '../formComponents/select'
 import { selectData, states } from '../../data/state'
+import ErrorMessage from '../formComponents/errorMessage'
+import { setEmployees } from '../../slices/employee/employeeSlice'
 
-const Form = ({setIsModalOpen}) => {
+const Form = ({setIsModalOpen, dispatch}) => {
 
-    const [firstnameValue, setFirstnameValue] = useState('')
-    const [lastnameValue, setLastNameValue] = useState('')
-    const [dateOfBirthValue, setDateOfBirthValue] = useState('')
-    const [startDateValue, setStartDateValue] = useState('')
+    const toCheck = ['addressStreet', 'city', 'dateOfBirth', 'zipCode', 'departement', 'firstName', 'lastName', 'startDate', 'state']
+
     const [departementValue, setDepartementValue] = useState('')
-    const [streetValue, setStreetValue] = useState('')
-    const [cityValue, setCityValue] = useState('')
-    const [zipCodeValue, setZipCodeValue] = useState('')
     const [stateValue, setStateValue] = useState('')
+    const [isError, setIsError] = useState(false)
+    const [errorVisible, setErrorVissible] = useState(false)
+    const [errorMessage, setErrorMessage] = useState('')
+    const [newEmployee, setNewEmployee] = useState({})
 
     const handleFirstName = (value) => {
-        setFirstnameValue(value)
+        let cloneEmployee = newEmployee
+        cloneEmployee['firstName'] = value
+        setNewEmployee(cloneEmployee)
     }
 
     const handleLastName = (value) => {
-        setLastNameValue(value)
+        let cloneEmployee = newEmployee
+        cloneEmployee['lastName'] = value
+        setNewEmployee(cloneEmployee)
     }
 
     const handleDateOfBirth = (value) => {
-        setDateOfBirthValue(value)
+        let cloneEmployee = newEmployee
+        cloneEmployee['dateOfBirth'] = value
+        setNewEmployee(cloneEmployee)
     }
 
     const handleStartDate = (value) => {
-        setStartDateValue(value)
+        let cloneEmployee = newEmployee
+        cloneEmployee['startDate'] = value
+        setNewEmployee(cloneEmployee)
     }
 
     const handleDepartement = (value) => {
         setDepartementValue(value)
+        let cloneEmployee = newEmployee
+        cloneEmployee['departement'] = value
+        setNewEmployee(cloneEmployee)
     }
 
     const handleStreet = (value) => {
-        setStreetValue(value)
+        let cloneEmployee = newEmployee
+        cloneEmployee['addressStreet'] = value
+        setNewEmployee(cloneEmployee)
     }
 
     const handleCity = (value) => {
-        setCityValue(value)
+        let cloneEmployee = newEmployee
+        cloneEmployee['city'] = value
+        setNewEmployee(cloneEmployee)
     }
 
     const handleZipCode = (value) => {
-        setZipCodeValue(value)
+        let cloneEmployee = newEmployee
+        cloneEmployee['zipCode'] = value
+        setNewEmployee(cloneEmployee)
     }
 
     const handleState = (value) => {
         setStateValue(value)
+        let cloneEmployee = newEmployee
+        cloneEmployee['state'] = value
+        setNewEmployee(cloneEmployee)
     }
 
     const format = "MM-DD-YYYY"
 
+    const handleSubmit = () => {
+        if(newEmployee.addressStreet !== undefined && newEmployee.city !== undefined && newEmployee.dateOfBirth !== undefined && newEmployee.zipCode !== undefined &&
+            newEmployee.departement !== undefined && newEmployee.firstName !== undefined && newEmployee.lastName !== undefined && newEmployee.startDate !== undefined && newEmployee.state !== undefined) {
+            setErrorMessage('')
+            setIsError(false)
+            setErrorVissible(false)
+            dispatch(setEmployees(newEmployee))
+            setIsModalOpen(true)
+        } else {
+            let message = 'Some required fields are not filled : '
+            let errorCount = []
+            toCheck.map((checker) => {
+                if(newEmployee[checker] === undefined) {
+                    return errorCount.push(checker)
+                }
+                return false
+            })
+            for(let i = 0; i < errorCount.length; i++) {
+                if(i+1 === errorCount.length) {
+                    message += `${errorCount[i]} !`
+                } else {
+                    message += `${errorCount[i]}, `
+                }
+            }
+            window.scrollTo(0, 0)
+            setErrorMessage(message)
+            setIsError(true)
+            setErrorVissible(true)
+        }
+    }
+
     return (
         <div className='form'>
             <h2 className='form-title'>Create Employee</h2>
+            {isError &&
+                <ErrorMessage message={errorMessage} visible={errorVisible} setVisible={setErrorVissible} />
+            }
             <div className='form-wrapper'>
                 <h2 className='form-section-title'>Employee Informations</h2>
                 <div className='personnal-info'>
@@ -93,7 +148,7 @@ const Form = ({setIsModalOpen}) => {
                     </div>
                 </div>
                 <div className='action-container'>
-                    <button className='form-button'>SAVE</button>
+                    <button className='form-button' onClick={handleSubmit}>SAVE</button>
                 </div>
             </div>
         </div>

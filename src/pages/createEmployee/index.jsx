@@ -4,20 +4,24 @@ import Header from "../../components/header"
 import Form from "../../components/form"
 import {useState} from "react"
 
-const CreateEmployee = ({employees = null}) => {
+const CreateEmployee = ({employees = null, dispatch}) => {
 
-    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(true);
+
+    console.log(employees)
 
     return (
         <>
-            <Header />
             {isModalOpen &&
-                <div className="modal">
-
+                <div className="modal" onClick={() => setIsModalOpen(false)}>
+                    <div className="modal-content">
+                        <span className="modal-text">Employee created !</span>
+                    </div>
                 </div>
             }
+            <Header />
             <div className="form-container">
-                <Form setIsModalOpen={setIsModalOpen} />
+                <Form setIsModalOpen={setIsModalOpen} dispatch={dispatch} />
             </div>
         </>  
     )
